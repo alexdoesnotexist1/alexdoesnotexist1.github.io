@@ -4,6 +4,7 @@ body {
 	font-family: "Comic Sans MS", serif;
 	margin-left: 15%;
 	margin-right: 15%;
+	
 }
 h1 {
 	text-align: center;
@@ -27,6 +28,7 @@ nav {
 	li a {
 		display: block;
 		color: white;
+		font-size: 2vw;
 		text-align: center;
 		padding: 14px 16px;
 	}
@@ -34,5 +36,35 @@ nav {
 	li a:hover {
 		color: white;
 		background-color: #111;
+	}
+}
+.imageBlock {
+	display: flex;
+}
+.imageBlock > div {
+	padding: 10px;
+}
+@media only screen and (max-width: 720px) {
+	h1 {
+		font-size: 6vw;
+		/* text-align: left; */
+		margin-left: -15%;
+		margin-right: -15%;
+	}
+	nav {
+		ul {
+			display: flex;
+			flex-direction: column;
+		}
+		li a {
+			font-size: 4vw;
+			padding: 4px 16px;
+		}
+	}
+	.imageBlock {
+		flex-direction: column;
+	}
+	.imageBlock > div {
+		padding: 0px;
 	}
 }
