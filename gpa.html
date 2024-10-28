@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>GPA Calculator</title>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<h1>GPA Calculator</h1>
+		<div class="container">
+		  	<div id="inputFields" style="display: flex; flex-direction: column; align-items: center;">
+				<div class="grade-entry">
+					<input type="checkbox" class="include-checkbox" checked>
+					<input type="text" placeholder="Course" class="course">
+					<select class="grade">
+						<option value="">Grade</option>
+						<option value="A+">A+</option>
+						<option value="A">A</option>
+						<option value="A-">A-</option>
+						<option value="B+">B+</option>
+						<option value="B">B</option>
+						<option value="B-">B-</option>
+						<option value="C+">C+</option>
+						<option value="C">C</option>
+						<option value="C-">C-</option>
+						<option value="D+">D+</option>
+						<option value="D">D</option>
+						<option value="D-">D-</option>
+						<option value="F">F</option>
+					</select>
+					<input type="text" placeholder="Credits" class="credits">
+					<button class="delete-entry" onclick="removeGradeEntry(this)">X</button>
+				</div>
+		  	</div>
+			<div id="buttons" style="display: flex; justify-content: center;">
+				<button onclick="addGradeEntry()">Add another course</button>
+				<button onclick="calculateGPA()">Calculate GPA</button>
+				<button onclick="resetEntries()">Reset</button>
+			</div>
+			<div id="result" style="display: flex; justify-content: center;"></div>
+		</div>
+
+		<script>
+			function addGradeEntry() {
+				const inputFields = document.getElementById('inputFields');
+				const newEntry = document.createElement('div');
+				newEntry.className = 'grade-entry';
+				newEntry.innerHTML = `
+					<input type="checkbox" class="include-checkbox" checked>
+					<input type="text" placeholder="Course" class="course">
+					<select class="grade">
+						<option value="">Grade</option>
+						<option value="A+">A+</option>
+						<option value="A">A</option>
+						<option value="A-">A-</option>
+						<option value="B+">B+</option>
+						<option value="B">B</option>
+						<option value="B-">B-</option>
+						<option value="C+">C+</option>
+						<option value="C">C</option>
+						<option value="C-">C-</option>
+						<option value="D+">D+</option>
+						<option value="D">D</option>
+						<option value="D-">D-</option>
+						<option value="F">F</option>
+					</select>
+					<input type="text" placeholder="Credits" class="credits">
+					<button class="delete-entry" onclick="removeGradeEntry(this)">X</button>
+				`;
+				inputFields.appendChild(newEntry);
+			}
+		
+			function removeGradeEntry(button) {
+				const entry = button.parentElement;
+				entry.remove();
+			}
+		
+			function calculateGPA() {
+				const gradeInputs = document.querySelectorAll('.grade');
+				const creditInputs = document.querySelectorAll('.credits');
+				const checkboxes = document.querySelectorAll('.include-checkbox');
+				let totalPoints = 0;
+				let totalCredits = 0;
+		
+				gradeInputs.forEach((gradeInput, index) => {
+					const grade = gradeInput.value;
+					const credits = parseFloat(creditInputs[index].value);
+					const gradePoints = getGradePoints(grade);
+			
+					if (checkboxes[index].checked && !isNaN(credits)) {
+						totalPoints += gradePoints * credits;
+						totalCredits += credits;
+					}
+				});
+		
+				const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+				document.getElementById('result').innerText = `Your GPA is: ${gpa}`;
+			}
+		
+			function resetEntries() {
+				document.getElementById('inputFields').innerHTML = '';
+				document.getElementById('result').innerText = '';
+				addGradeEntry();
+			}
+		
+			function getGradePoints(grade) {
+				const gradeScale = {
+					'A+': 4.0,
+					'A': 4.0,
+					'A-': 3.7,
+					'B+': 3.3,
+					'B': 3.0,
+					'B-': 2.7,
+					'C+': 2.3,
+					'C': 2.0,
+					'C-': 1.7,
+					'D+': 1.3,
+					'D': 1.0,
+					'D-': 0.7,
+					'F': 0.0
+				};
+				return gradeScale[grade] || null;
+			}
+			
+		</script>
+	</body>
+</html>
