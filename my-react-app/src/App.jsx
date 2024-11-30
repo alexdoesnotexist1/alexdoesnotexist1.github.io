@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import MonthlyCalendarHeatmap from "./MonthlyCalendarHeatmap";
+import MonthlyCalendarHeatmap from "./MonthlyCalendarHeatmap.jsx";
 
 function App() {
   const [data, setData] = useState([]);
